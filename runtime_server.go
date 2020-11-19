@@ -62,6 +62,10 @@ type RuntimeServer struct {
 	// Maximum: 65535
 	// Minimum: 0
 	Port *int64 `json:"port,omitempty"`
+
+	// srv record
+	// Read Only: true
+	SrvRecord string `json:"srv_record,empty"`
 }
 
 // Validate validates this runtime server

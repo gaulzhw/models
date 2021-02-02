@@ -61,6 +61,9 @@ type Backend struct {
 	// connect timeout
 	ConnectTimeout *int64 `json:"connect_timeout,omitempty"`
 
+	// client timeout
+	ClientTimeout *int64 `json:"client_timeout,omitempty"`
+
 	// cookie
 	Cookie *Cookie `json:"cookie,omitempty"`
 

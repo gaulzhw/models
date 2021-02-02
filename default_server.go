@@ -34,6 +34,10 @@ import (
 // swagger:model default_server
 type DefaultServer struct {
 
+	// alpn
+	// Pattern: ^[^\s]+$
+	Alpn string `json:"alpn,omitempty"`
+
 	// check sni
 	// Pattern: ^[^\s]+$
 	CheckSni string `json:"check-sni,omitempty"`
@@ -63,6 +67,10 @@ type DefaultServer struct {
 	// Minimum: 1
 	Port *int64 `json:"port,omitempty"`
 
+	// proto
+	// Pattern: ^[^\s]+$
+	Proto string `json:"proto,omitempty"`
+
 	// resolve net
 	// Pattern: ^[^\s]+$
 	ResolveNet string `json:"resolve-net,omitempty"`
@@ -90,6 +98,10 @@ type DefaultServer struct {
 func (m *DefaultServer) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateAlpn(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateCheckSni(formats); err != nil {
 		res = append(res, err)
 	}
@@ -103,6 +115,10 @@ func (m *DefaultServer) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validatePort(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateProto(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -125,6 +141,19 @@ func (m *DefaultServer) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *DefaultServer) validateAlpn(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Alpn) { // not required
+		return nil
+	}
+
+	if err := validate.Pattern("alpn", "body", string(m.Alpn), `^[^\s]+$`); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -208,6 +237,19 @@ func (m *DefaultServer) validatePort(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MaximumInt("port", "body", int64(*m.Port), 65535, false); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *DefaultServer) validateProto(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Proto) { // not required
+		return nil
+	}
+
+	if err := validate.Pattern("proto", "body", string(m.Proto), `^[^\s]+$`); err != nil {
 		return err
 	}
 

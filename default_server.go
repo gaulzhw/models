@@ -49,8 +49,8 @@ type DefaultServer struct {
 	// downinter
 	Downinter *int64 `json:"downinter,omitempty"`
 
-	// ssl
-	Ssl bool `json:"ssl,omitempty"`
+	// no ssl
+	Nossl bool `json:"nossl,omitempty"`
 
 	// fall
 	Fall *int64 `json:"fall,omitempty"`
